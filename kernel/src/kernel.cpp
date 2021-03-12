@@ -44,6 +44,10 @@ void Print(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, co
     while(*chr != 0){
         putChar(framebuffer, psf1Font, color, *chr, CursorPosition.X, CursorPosition.Y);
         CursorPosition.X+=8;
+        if(CursorPosition.X + 8 > framebuffer->Width){
+            CursorPosition.X = 0;
+            CursorPosition.Y += 16;
+        }
         chr++;
     }
 }
@@ -51,6 +55,7 @@ void Print(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, co
 extern "C" void _start(Framebuffer *framebuffer, PSF1_FONT* psf1Font){
     CursorPosition.X = 50;
     CursorPosition.Y = 120;
-    Print(framebuffer, psf1Font, 0xFF0000FF, "Hello World. My name is Jonas!");
+    for(int t=0;t<50;t++)
+        Print(framebuffer, psf1Font, 0xFF0000FF, "Hello World. My name is Jonas!");
     return ;
 }
