@@ -178,7 +178,7 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable) {
 
     Print(L"Kernel Loaded \n\r");
 
-    void (*KernelStart)(Framebuffer*) = ((__attribute__((sysv_abi)) void (*)(Framebuffer*)) header.e_entry);
+    void (*KernelStart)(Framebuffer*, PSF1_FONT*) = ((__attribute__((sysv_abi)) void (*)(Framebuffer*, PSF1_FONT*)) header.e_entry);
 
     PSF1_FONT *newFont = LoadPSF1Font(NULL, L"zap-light16.psf", ImageHandle, SystemTable);
     if(newFont == NULL){
@@ -204,7 +204,7 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable) {
     );
 
 
-    KernelStart(newBuffer);
+    KernelStart(newBuffer, newFont);
 
 
     return EFI_SUCCESS;
