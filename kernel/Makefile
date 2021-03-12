@@ -7,7 +7,7 @@ LDS = kernel.ld
 CPP = g++
 LD = ld
 
-CFLAGS = -ffreestanding -fshort-wchar -Wpointer-arith
+CFLAGS = -ffreestanding -fshort-wchar -Wpointer-arith -Wwrite-strings
 LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 
 SRCDIR := src

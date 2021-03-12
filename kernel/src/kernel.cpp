@@ -20,6 +20,11 @@ typedef struct {
     void* glyphBuffer;
 } PSF1_FONT;
 
+typedef struct {
+    unsigned int X;
+    unsigned int Y;
+} Point;
+
 void putChar(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, char chr, unsigned int xOff, unsigned int yOff){
     unsigned int* pixPtr = (unsigned int*)framebuffer->BaseAddress;
     char* fontPtr = (char*)psf1Font->glyphBuffer + (chr * psf1Font->psf1_Header->charsize);
@@ -33,12 +38,19 @@ void putChar(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, 
     }
 }
 
-extern "C" void _start(Framebuffer *framebuffer, PSF1_FONT* psf1_font){
+Point CursorPosition;
+void Print(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, const char* str){
+    const char* chr = str;
+    while(*chr != 0){
+        putChar(framebuffer, psf1Font, color, *chr, CursorPosition.X, CursorPosition.Y);
+        CursorPosition.X+=8;
+        chr++;
+    }
+}
 
-    putChar(framebuffer, psf1_font, 0xFF0000FF, 'J', 10, 10);
-    putChar(framebuffer, psf1_font, 0x00FF00FF, 'o', 26, 10);
-    putChar(framebuffer, psf1_font, 0x0000FFFF, 'n', 42, 10);
-    putChar(framebuffer, psf1_font, 0xFF00FFFF, 'a', 58, 10);
-    putChar(framebuffer, psf1_font, 0xFFFFFFFF, 's', 74, 10);
+extern "C" void _start(Framebuffer *framebuffer, PSF1_FONT* psf1Font){
+    CursorPosition.X = 50;
+    CursorPosition.Y = 120;
+    Print(framebuffer, psf1Font, 0xFF0000FF, "Hello World. My name is Jonas!");
     return ;
 }
