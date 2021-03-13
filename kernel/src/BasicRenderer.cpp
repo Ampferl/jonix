@@ -1,5 +1,12 @@
 #include "BasicRenderer.h"
 
+BasicRenderer::BasicRenderer(Framebuffer* targetFramebuffer, PSF1_FONT* psf1_Font){
+    TargetFramebuffer = targetFramebuffer;
+    PSF1_Font = psf1_Font;
+    Color = 0xFFFFFFFF;
+    CursorPosition = {0,0};
+}
+
 void BasicRenderer::Print(const char* str){
     char* chr = (char*)str;
     while(*chr != 0){
