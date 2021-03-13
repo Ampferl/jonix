@@ -52,6 +52,43 @@ const char* to_string(int64_t value){
     return intTo_StringOutput;
 }
 
+char hexTo_StringOutput[128];
+const char* internal_to_hex_string(uint64_t value, uint8_t size){
+    uint64_t* valPtr = &value;
+    uint8_t* ptr;
+    uint8_t tmp;
+    for(uint8_t i = 0; i < size; i++){
+        ptr = ((uint8_t*) valPtr + i);
+        tmp = ((*ptr & 0xF0) >> 4);
+        hexTo_StringOutput[size - (i * 2 + 1)] = tmp + (tmp > 9 ? 'A' : '0');
+        tmp = ((*ptr & 0x0F));
+        hexTo_StringOutput[size - (i * 2)] = tmp + (tmp > 9 ? 'A' : '0');
+    }
+    hexTo_StringOutput[size + 1] = 0;
+    return hexTo_StringOutput;
+}
+
+const char* to_hex_string(uint64_t value){
+    uint8_t size = 8 * 2 - 1;
+    return internal_to_hex_string((uint64_t)value, size);
+}
+
+const char* to_hex_string(uint32_t value){
+    uint8_t size = 4 * 2 - 1;
+    return internal_to_hex_string((uint64_t)value, size);
+}
+
+const char* to_hex_string(uint16_t value){
+    uint8_t size = 2 * 2 - 1;
+    return internal_to_hex_string((uint64_t)value, size);
+}
+
+const char* to_hex_string(uint8_t value){
+    uint8_t size = 1 * 2 - 1;
+    return internal_to_hex_string((uint64_t)value, size);
+}
+
+
 char doubleTo_StringOutput[128];
 const char* to_string(double value, uint8_t decimalPlaces){
 
