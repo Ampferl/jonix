@@ -14,7 +14,8 @@ struct BootInfo{
     uint64_t mMapDescSize;
 };
 
-uint8_t testBuffer[20];
+extern uint64_t _KernelStart;
+extern uint64_t _KernelEnd;
 
 extern "C" void _start(BootInfo *bootInfo){
     BasicRenderer newRenderer(bootInfo->framebuffer, bootInfo->psf1_Font);
@@ -24,6 +25,11 @@ extern "C" void _start(BootInfo *bootInfo){
 
     PageFrameAllocator newAllocator;
     newAllocator.ReadEFIMemoryMap(bootInfo->mMap, bootInfo->mMapSize, bootInfo->mMapDescSize);
+
+    uint64_t kernelSize = (uint64_t)&_KernelEnd - (uint64_t)&_KernelStart;
+    uint64_t kernelPages = (uint64_t)kernelSize / 4096 + 1;
+
+    newAllocator.LockPages(&_KernelStart, kernelPages);
 
     newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
     newRenderer.Print("Free RAM: ");
