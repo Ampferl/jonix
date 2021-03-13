@@ -6,6 +6,9 @@
 class BasicRenderer{
     public:
         Point CursorPosition;
-        void Print(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, const char* str);
-        void putChar(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, char chr, unsigned int xOff, unsigned int yOff);
+        Framebuffer* TargetFramebuffer;
+        PSF1_FONT* PSF1_Font;
+        unsigned int Color;
+        void Print(const char* str);
+        void PutChar(char chr, unsigned int xOff, unsigned int yOff);
 };
