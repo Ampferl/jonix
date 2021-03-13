@@ -1,26 +1,32 @@
 #include <stdint.h>
 #include "BasicRenderer.h"
+#include "efiMemory.h"
 #include "cstr.h"
 
+struct BootInfo{
+    Framebuffer *framebuffer;
+    PSF1_FONT *psf1_Font;
+    void *mMap;
+    uint64_t mMapSize;
+    uint64_t mMapDescSize;
+};
 
-extern "C" void _start(Framebuffer *framebuffer, PSF1_FONT* psf1Font){
-    BasicRenderer newRenderer(framebuffer, psf1Font);
-    newRenderer.Print("Test C++ with BasicRenderer");
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_string((uint64_t) 123456789));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_string((int64_t) -987654));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_string((double) -13.8765451));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_string((double) -13.8765451, 5));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_hex_string((uint64_t) 0x12F41E3A1B3C1234));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_hex_string((uint32_t) 0x12341234));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_hex_string((uint16_t) 0x1234));
-    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
-    newRenderer.Print(to_hex_string((uint8_t) 0x12));
+extern "C" void _start(BootInfo *bootInfo){
+    BasicRenderer newRenderer(bootInfo->framebuffer, bootInfo->psf1_Font);
+
+
+    uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
+
+    for(int i = 0; i < mMapEntries; i++){
+        EFI_MEMORY_DESCRIPTOR* desc = (EFI_MEMORY_DESCRIPTOR*)((uint64_t)bootInfo->mMap + (i * bootInfo->mMapDescSize));
+        newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
+        newRenderer.Print(EFI_MEMORY_TYPE_STRINGS[desc->type]);
+        newRenderer.Color = 0xFFFF00FF;
+        newRenderer.Print(" ");
+        newRenderer.Print(to_string(desc->numPages * 4096 / 1024));
+        newRenderer.Print(" KB");
+        newRenderer.Color = 0xFFFFFFF;
+    }
+
     return ;
 }
