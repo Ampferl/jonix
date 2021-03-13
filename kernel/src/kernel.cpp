@@ -37,6 +37,13 @@ extern "C" void _start(BootInfo *bootInfo){
     newRenderer.Print("Reserved RAM: ");
     newRenderer.Print(to_string(newAllocator.GetReservedRAM() / 1024));
     newRenderer.Print(" KB");
+    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
+
+    for(int t = 0; t < 20; t++){
+        void* address = newAllocator.RequestPage();
+        newRenderer.Print(to_hex_string((uint64_t)address));
+        newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
+    }
 
     // newRenderer.Print(to_string(GetMemorySize(bootInfo->mMap, mMapEntries, bootInfo->mMapDescSize)));
 

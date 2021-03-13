@@ -52,7 +52,7 @@ void PageFrameAllocator::InitBitmap(size_t bitmapSize, void* bufferAddress){
 void* PageFrameAllocator::RequestPage(){
     for(uint64_t index = 0; index < PageBitmap.Size * 8; index++){
         if(PageBitmap[index] == true) continue;
-        LockPages((void*)(index * 4096));
+        LockPage((void*)(index * 4096));
         return (void*)(index * 4096);
     }
 
