@@ -3,6 +3,7 @@
 #include "efiMemory.h"
 #include "memory.h"
 #include "Bitmap.h"
+#include "PageFrameAllocator.h"
 #include "cstr.h"
 
 struct BootInfo{
@@ -21,7 +22,21 @@ extern "C" void _start(BootInfo *bootInfo){
 
     uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
 
+    PageFrameAllocator newAllocator;
+    newAllocator.ReadEFIMemoryMap(bootInfo->mMap, bootInfo->mMapSize, bootInfo->mMapDescSize);
 
+    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
+    newRenderer.Print("Free RAM: ");
+    newRenderer.Print(to_string(newAllocator.GetFreeRAM() / 1024));
+    newRenderer.Print(" KB");
+    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
+    newRenderer.Print("Used RAM: ");
+    newRenderer.Print(to_string(newAllocator.GetUsedRAM() / 1024));
+    newRenderer.Print(" KB");
+    newRenderer.CursorPosition = {0, newRenderer.CursorPosition.Y+16};
+    newRenderer.Print("Reserved RAM: ");
+    newRenderer.Print(to_string(newAllocator.GetReservedRAM() / 1024));
+    newRenderer.Print(" KB");
 
     // newRenderer.Print(to_string(GetMemorySize(bootInfo->mMap, mMapEntries, bootInfo->mMapDescSize)));
 
