@@ -40,7 +40,7 @@ void putChar(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, 
 
 Point CursorPosition;
 void Print(Framebuffer *framebuffer, PSF1_FONT *psf1Font, unsigned int color, const char* str){
-    const char* chr = str;
+    char* chr = (char*)str;
     while(*chr != 0){
         putChar(framebuffer, psf1Font, color, *chr, CursorPosition.X, CursorPosition.Y);
         CursorPosition.X+=8;
