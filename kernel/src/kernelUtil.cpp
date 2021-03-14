@@ -2,6 +2,7 @@
 #include "gdt/gdt.h"
 #include "interrupts/IDT.h"
 #include "interrupts/interrupts.h"
+#include "IO.h"
 
 KernelInfo kernelInfo;
 PageTableManager pageTableManager = NULL;
@@ -57,10 +58,19 @@ void PrepareInterrupts(){
     int_GPFault->type_attr = IDT_TA_InterruptGate;
     int_GPFault->selector = 0x08;
 
+    IDTDescEntry* int_Keyboard = (IDTDescEntry*)(idtr.Offset + 0x21 * sizeof(IDTDescEntry));
+    int_Keyboard->SetOffset((uint64_t)KeyboardInterrupt_Handler);
+    int_Keyboard->type_attr = IDT_TA_InterruptGate;
+    int_Keyboard->selector = 0x08;
+
     asm("lidt %0" : : "m" (idtr));
 
     RemapPIC();
 
+    outb(PIC1_DATA, 0b11111101);
+    outb(PIC2_DATA, 0b11111111);
+
+    asm("sti");
 
 }
 

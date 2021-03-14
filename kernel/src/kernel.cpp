@@ -6,8 +6,5 @@ extern "C" void _start(BootInfo *bootInfo){
 
     GlobalRenderer->Println("Kernel Initialized Successfully");
 
-    int* test = (int*)0x80000000000;
-    *test = 2;
-
     while(true);
 }
