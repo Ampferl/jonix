@@ -58,6 +58,10 @@ void PrepareInterrupts(){
     int_GPFault->selector = 0x08;
 
     asm("lidt %0" : : "m" (idtr));
+
+    RemapPIC();
+
+
 }
 
 BasicRenderer r = BasicRenderer(NULL, NULL);
