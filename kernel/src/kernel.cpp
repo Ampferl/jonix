@@ -21,6 +21,7 @@ extern uint64_t _KernelStart;
 extern uint64_t _KernelEnd;
 
 extern "C" void _start(BootInfo *bootInfo){
+
     BasicRenderer newRenderer(bootInfo->framebuffer, bootInfo->psf1_Font);
 
     uint64_t mMapEntries = bootInfo->mMapSize / bootInfo->mMapDescSize;
@@ -43,11 +44,14 @@ extern "C" void _start(BootInfo *bootInfo){
 
     uint64_t fbBase = (uint64_t)bootInfo->framebuffer->BaseAddress;
     uint64_t fbSize = (uint64_t)bootInfo->framebuffer->BufferSize + 0x1000;
+    GlobalAllocator.LockPages((void*)fbBase, fbSize / 0x1000 + 1);
     for(uint64_t t = fbBase; t < fbBase + fbSize; t+=4096){
         pageTableManager.MapMemory((void*)t, (void*)t);
     }
 
     asm("mov %0, %%cr3" : : "r" (PML4));
+
+    memset(bootInfo->framebuffer->BaseAddress, 0, bootInfo->framebuffer->BufferSize);
 
     pageTableManager.MapMemory((void*)0x600000000, (void*)0x8000);
     uint64_t* test = (uint64_t*)0x600000000;
