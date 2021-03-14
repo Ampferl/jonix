@@ -56,3 +56,11 @@ void BasicRenderer::PutChar(char chr, unsigned int xOff, unsigned int yOff){
         fontPtr++;
     }
 }
+
+void BasicRenderer::PutChar(char chr){
+    PutChar(chr, CursorPosition.X, GlobalRenderer->CursorPosition.Y);
+    CursorPosition.X += 8;
+    if(CursorPosition.X + 8 > TargetFramebuffer->Width){
+        CursorPosition = {0, CursorPosition.Y+16};
+    }
+}

@@ -16,6 +16,7 @@ class BasicRenderer{
         void Clear(uint32_t color);
         void Next();
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
+        void PutChar(char chr);
 };
 
 extern BasicRenderer* GlobalRenderer;
