@@ -11,9 +11,11 @@ class BasicRenderer{
         Framebuffer* TargetFramebuffer;
         PSF1_FONT* PSF1_Font;
         unsigned int Color;
+        unsigned int ClearColor;
         void Print(const char* str);
         void Println(const char* str);
-        void Clear(uint32_t color);
+        void Clear();
+        void ClearChar();
         void Next();
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
         void PutChar(char chr);
