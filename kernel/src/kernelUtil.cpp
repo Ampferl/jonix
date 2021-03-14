@@ -36,5 +36,6 @@ void PrepareMemory(BootInfo* bootInfo){
 
 KernelInfo InitializeKernel(BootInfo* bootInfo){
     PrepareMemory(bootInfo);
+    memset(bootInfo->framebuffer->BaseAddress, 0, bootInfo->framebuffer->BufferSize);
     return kernelInfo;
 }
