@@ -54,16 +54,11 @@ void PrepareInterrupts(){
     SetIDTGate((void*)DoubleFault_Handler, 0x8, IDT_TA_InterruptGate, 0x08);
     SetIDTGate((void*)GPFault_Handler, 0xD, IDT_TA_InterruptGate, 0x08);
     SetIDTGate((void*)KeyboardInterrupt_Handler, 0x21, IDT_TA_InterruptGate, 0x08);
+    SetIDTGate((void*)MouseInterrupt_Handler, 0x2C, IDT_TA_InterruptGate, 0x08);
 
     asm("lidt %0" : : "m" (idtr));
 
     RemapPIC();
-
-    outb(PIC1_DATA, 0b11111101);
-    outb(PIC2_DATA, 0b11111111);
-
-    asm("sti");
-
 }
 
 BasicRenderer r = BasicRenderer(NULL, NULL);
@@ -79,6 +74,13 @@ KernelInfo InitializeKernel(BootInfo* bootInfo){
     memset(bootInfo->framebuffer->BaseAddress, 0, bootInfo->framebuffer->BufferSize);
 
     PrepareInterrupts();
+
+    InitPS2Mouse();
+
+    outb(PIC1_DATA, 0b11111001);
+    outb(PIC2_DATA, 0b11101111);
+
+    asm("sti");
 
     return kernelInfo;
 }

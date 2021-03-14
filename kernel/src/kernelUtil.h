@@ -9,6 +9,7 @@
 #include "cstr.h"
 #include "paging/paging.h"
 #include "paging/PageTableManager.h"
+#include "userinput/mouse.h"
 
 struct BootInfo{
     Framebuffer *framebuffer;
