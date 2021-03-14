@@ -6,7 +6,8 @@ extern "C" void _start(BootInfo *bootInfo){
 
     GlobalRenderer->Println("Kernel Initialized Successfully");
 
-    asm("int $0x0e");
+    GlobalRenderer->Clear(0x00FF0000);
+    GlobalRenderer->Println("Error!");
 
     while(true);
 }

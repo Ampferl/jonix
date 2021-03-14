@@ -22,10 +22,26 @@ void BasicRenderer::Print(const char* str){
     }
 }
 
-void BasicRenderer::Println(const char* str){
-    Print(str);
+void BasicRenderer::Next(){
     CursorPosition.X = 0;
     CursorPosition.Y += 16;
+}
+
+void BasicRenderer::Println(const char* str){
+    Print(str);
+    Next();
+}
+
+void BasicRenderer::Clear(uint32_t color){
+    uint64_t fbBase = (uint64_t)TargetFramebuffer->BaseAddress;
+    uint64_t bytesPerScanline = TargetFramebuffer->PixelsPerScanline * 4;
+    uint64_t fbHeight = TargetFramebuffer->Height;
+    for(int verticalScanline = 0; verticalScanline < fbHeight; verticalScanline++){
+        uint64_t pixPtrBase = fbBase + (bytesPerScanline * verticalScanline);
+        for(uint32_t* pixPtr = (uint32_t*)pixPtrBase; pixPtr < (uint32_t*)(pixPtrBase + bytesPerScanline); pixPtr++){
+            *pixPtr = color;
+        }
+    }
 }
 
 void BasicRenderer::PutChar(char chr, unsigned int xOff, unsigned int yOff){

@@ -2,6 +2,7 @@
 #include "math.h"
 #include "Framebuffer.h"
 #include "PSF1Font.h"
+#include <stdint.h>
 
 class BasicRenderer{
     public:
@@ -12,6 +13,8 @@ class BasicRenderer{
         unsigned int Color;
         void Print(const char* str);
         void Println(const char* str);
+        void Clear(uint32_t color);
+        void Next();
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
 };
 
