@@ -11,5 +11,8 @@ class BasicRenderer{
         PSF1_FONT* PSF1_Font;
         unsigned int Color;
         void Print(const char* str);
+        void Println(const char* str);
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
 };
+
+extern BasicRenderer* GlobalRenderer;

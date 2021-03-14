@@ -1,5 +1,7 @@
 #include "BasicRenderer.h"
 
+BasicRenderer* GlobalRenderer;
+
 BasicRenderer::BasicRenderer(Framebuffer* targetFramebuffer, PSF1_FONT* psf1_Font){
     TargetFramebuffer = targetFramebuffer;
     PSF1_Font = psf1_Font;
@@ -18,6 +20,12 @@ void BasicRenderer::Print(const char* str){
         }
         chr++;
     }
+}
+
+void BasicRenderer::Println(const char* str){
+    Print(str);
+    CursorPosition.X = 0;
+    CursorPosition.Y += 16;
 }
 
 void BasicRenderer::PutChar(char chr, unsigned int xOff, unsigned int yOff){
