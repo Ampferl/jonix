@@ -1,5 +1,24 @@
 #include "mouse.h"
 
+uint8_t MousePointer[] = {
+        0b11111111, 0b11111111,
+        0b11111111, 0b11111100,
+        0b11111111, 0b11110000,
+        0b11111111, 0b11000000,
+        0b11111111, 0b00000000,
+        0b11111000, 0b00000000,
+        0b11111000, 0b00000000,
+        0b11111000, 0b00000000,
+        0b11110000, 0b00000000,
+        0b11110000, 0b00000000,
+        0b11100000, 0b00000000,
+        0b11100000, 0b00000000,
+        0b11000000, 0b00000000,
+        0b11000000, 0b00000000,
+        0b10000000, 0b00000000,
+        0b10000000, 0b00000000,
+};
+
 void MouseWait(){
     uint64_t timeout = 100000;
     while (timeout--){
@@ -34,6 +53,7 @@ uint8_t MouseCycle = 0;
 uint8_t MousePacket[4];
 bool MousePacketReady = false;
 Point MousePosition;
+Point MousePositionOld;
 void HandlePS2Mouse(uint8_t data){
     switch (MouseCycle) {
         case 0:
@@ -111,9 +131,11 @@ void ProcessMousePacket(){
     if (MousePosition.Y < 0) MousePosition.Y = 0;
     if (MousePosition.Y > GlobalRenderer->TargetFramebuffer->Height-16) MousePosition.Y = GlobalRenderer->TargetFramebuffer->Height-16;
 
-    GlobalRenderer->PutChar('A', MousePosition.X, MousePosition.Y);
+    GlobalRenderer->ClearMouseCursor(MousePointer, MousePositionOld);
+    GlobalRenderer->DrawOverlayMouseCursor(MousePointer, MousePosition, 0xffffffff);
 
     MousePacketReady = false;
+    MousePositionOld = MousePosition;
 
 }
 
