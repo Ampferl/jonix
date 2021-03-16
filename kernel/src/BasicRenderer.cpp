@@ -34,7 +34,9 @@ void BasicRenderer::ClearMouseCursor(uint8_t* mouseCursor, Point position){
             int bit = y * 16 + x;
             int byte = bit / 8;
             if((mouseCursor[byte] & (0b10000000 >> (x % 8)))){
-                PutPix(position.X + x, position.Y + y, MouseCursorBuffer[x+y*16]);
+                if(GetPix(position.X + x, position.Y + y) == MouseCursorBufferAfter[x+y*16]){
+                    PutPix(position.X + x, position.Y + y, MouseCursorBuffer[x+y*16]);
+                }
             }
         }
     }
@@ -56,6 +58,7 @@ void BasicRenderer::DrawOverlayMouseCursor(uint8_t* mouseCursor, Point position,
             if((mouseCursor[byte] & (0b10000000 >> (x % 8)))){
                 MouseCursorBuffer[x+y*16] = GetPix(position.X + x, position.Y + y);
                 PutPix(position.X + x, position.Y + y, color);
+                MouseCursorBufferAfter[x+y*16] = GetPix(position.X + x, position.Y + y);
             }
         }
     }
