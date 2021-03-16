@@ -19,6 +19,8 @@ void BasicRenderer::PutPix(uint32_t x, uint32_t y, uint32_t color){
 }
 
 void BasicRenderer::ClearMouseCursor(uint8_t* mouseCursor, Point position){
+    if(!MouseDrawn) return;
+
     int xMax = 16;
     int yMax = 16;
     int differenceX = TargetFramebuffer->Width - position.X;
@@ -57,6 +59,7 @@ void BasicRenderer::DrawOverlayMouseCursor(uint8_t* mouseCursor, Point position,
             }
         }
     }
+    MouseDrawn = true;
 }
 
 void BasicRenderer::Print(const char* str){

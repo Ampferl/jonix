@@ -13,6 +13,7 @@ class BasicRenderer{
         unsigned int Color;
         unsigned int ClearColor;
         uint32_t MouseCursorBuffer[16 * 16];
+        bool MouseDrawn;
         void Print(const char* str);
         void Println(const char* str);
         void Clear();
