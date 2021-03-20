@@ -31,5 +31,13 @@ namespace ACPI{
         uint64_t Reserved;
     }__attribute__((packed));
 
+    struct DeviceConfig{
+        uint64_t BaseAddress;
+        uint16_t PCISegGroup;
+        uint8_t StartBus;
+        uint8_t EndBus;
+        uint32_t Reserved;
+    }__attribute__((packed));
+
     void* FindTable(SDTHeader* sdtHeader, char* signature);
 }
