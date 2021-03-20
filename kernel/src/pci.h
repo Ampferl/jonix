@@ -22,4 +22,6 @@ namespace PCI{
     };
 
     void EnumeratePCI(ACPI::MCFGHeader* mcfg);
+
+    extern const char* DeviceClasses[];
 }

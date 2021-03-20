@@ -16,6 +16,8 @@ namespace PCI{
         GlobalRenderer->Print(to_hex_string(pciDeviceHeader->VendorID));
         GlobalRenderer->Print(" ");
         GlobalRenderer->Print(to_hex_string(pciDeviceHeader->DeviceID));
+        GlobalRenderer->Print(" ");
+        GlobalRenderer->Print(DeviceClasses[pciDeviceHeader->Class]);
         GlobalRenderer->Next();
     }
 
