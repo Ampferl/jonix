@@ -7,7 +7,19 @@ namespace PCI{
     }
 
     void EnumerateDevice(uint64_t busAddress, uint64_t device){
+        uint64_t offset = device << 15;
 
+        uint64_t deviceAddress = busAddress + offset;
+        GlobalPageTableManager.MapMemory((void*)deviceAddress, (void*)deviceAddress);
+
+        PCIDeviceHeader* pciDeviceHeader = (PCIDeviceHeader*)deviceAddress;
+
+        if(pciDeviceHeader->DeviceID == 0) return;
+        if(pciDeviceHeader->DeviceID == 0xFFFF) return;
+
+        for(uint64_t function = 0; function < 32; function++){
+            EnumerateFunction(deviceAddress, function);
+        }
     }
 
     void EnumerateBus(uint64_t baseAddress, uint64_t bus){
