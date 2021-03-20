@@ -14,9 +14,9 @@ namespace PCI{
         if(pciDeviceHeader->DeviceID == 0xFFFF) return;
 
         GlobalRenderer->Print(GetVendorName(pciDeviceHeader->VendorID));
-        GlobalRenderer->Print(" ");
-        GlobalRenderer->Print(to_hex_string(pciDeviceHeader->DeviceID));
-        GlobalRenderer->Print(" ");
+        GlobalRenderer->Print(" / ");
+        GlobalRenderer->Print(GetDeviceName(pciDeviceHeader->VendorID, pciDeviceHeader->DeviceID));
+        GlobalRenderer->Print(" / ");
         GlobalRenderer->Print(DeviceClasses[pciDeviceHeader->Class]);
         GlobalRenderer->Next();
     }

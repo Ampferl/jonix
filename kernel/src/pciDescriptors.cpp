@@ -36,4 +36,21 @@ namespace PCI{
         }
         return to_hex_string(vendorID);
     }
+
+    const char* GetDeviceName(uint16_t vendorID, uint16_t deviceID){
+        switch (vendorID){
+            case 0x8086:
+                switch(deviceID){
+                    case 0x2918:
+                        return "LPC Interface Controller";
+                    case 0x2922:
+                        return "6 port SATA Controller [AHCI mode]";
+                    case 0x2930:
+                        return "SMBus Controller";
+                    case 0x29C0:
+                        return "Express DRAM Controller";
+                }
+        }
+        return to_hex_string(deviceID);
+    }
 }

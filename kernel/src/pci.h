@@ -26,4 +26,5 @@ namespace PCI{
     extern const char* DeviceClasses[];
 
     const char* GetVendorName(uint16_t vendorID);
+    const char* GetDeviceName(uint16_t vendorID, uint16_t deviceID);
 }
