@@ -12,6 +12,11 @@ namespace PCI{
 
         if(pciDeviceHeader->DeviceID == 0) return;
         if(pciDeviceHeader->DeviceID == 0xFFFF) return;
+
+        GlobalRenderer->Print(to_hex_string(pciDeviceHeader->VendorID));
+        GlobalRenderer->Print(" ");
+        GlobalRenderer->Print(to_hex_string(pciDeviceHeader->DeviceID));
+        GlobalRenderer->Next();
     }
 
     void EnumerateDevice(uint64_t busAddress, uint64_t device){
