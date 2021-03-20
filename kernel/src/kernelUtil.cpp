@@ -61,6 +61,16 @@ void PrepareInterrupts(){
     RemapPIC();
 }
 
+void PrepareACPI(BootInfo* bootInfo){
+    ACPI::SDTHeader* xsdt = (ACPI::SDTHeader*)(bootInfo->rsdp->XSDTAddress);
+    ACPI::MCFGHeader* mcfg = (ACPI::MCFGHeader*)ACPI::FindTable(xsdt, (char*)"MCFG");
+
+    for(int t = 0; t < 4; t++){
+        GlobalRenderer->PutChar(mcfg->Header.Signature[t]);
+    }
+    GlobalRenderer->Next();
+}
+
 BasicRenderer r = BasicRenderer(NULL, NULL);
 KernelInfo InitializeKernel(BootInfo* bootInfo){
     r = BasicRenderer(bootInfo->framebuffer, bootInfo->psf1_Font);
@@ -71,11 +81,14 @@ KernelInfo InitializeKernel(BootInfo* bootInfo){
     LoadGDT(&gdtDescriptor);
 
     PrepareMemory(bootInfo);
+
     memset(bootInfo->framebuffer->BaseAddress, 0, bootInfo->framebuffer->BufferSize);
 
     PrepareInterrupts();
 
     InitPS2Mouse();
+
+    PrepareACPI(bootInfo);
 
     outb(PIC1_DATA, 0b11111001);
     outb(PIC2_DATA, 0b11101111);
