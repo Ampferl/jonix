@@ -24,4 +24,6 @@ namespace PCI{
     void EnumeratePCI(ACPI::MCFGHeader* mcfg);
 
     extern const char* DeviceClasses[];
+
+    const char* GetVendorName(uint16_t vendorID);
 }

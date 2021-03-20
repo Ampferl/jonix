@@ -24,4 +24,16 @@ namespace PCI{
             "Processing Accelerator",
             "Non Essential Instrumentation"
     };
+
+    const char* GetVendorName(uint16_t vendorID){
+        switch (vendorID){
+            case 0x1022:
+                return "AMD";
+            case 0x10DE:
+                return "NVIDIA Corporation";
+            case 0x8086:
+                return "Intel Corp";
+        }
+        return to_hex_string(vendorID);
+    }
 }
