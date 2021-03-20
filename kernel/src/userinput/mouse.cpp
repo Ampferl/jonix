@@ -19,27 +19,6 @@ uint8_t MousePointer[] = {
     0b00000001, 0b11000000
 };
 
-
-uint8_t DrawPointer[] = {
-    0b00000000, 0b00000000,
-    0b00000000, 0b00000000,
-    0b00000000, 0b00000000,
-    0b00000111, 0b11100000,
-    0b00001111, 0b11110000,
-    0b00011111, 0b11111000,
-    0b00011111, 0b11111000,
-    0b00011111, 0b11111000,
-    0b00011111, 0b11111000,
-    0b00011111, 0b11111000,
-    0b00011111, 0b11111000,
-    0b00001111, 0b11110000,
-    0b00000111, 0b11100000,
-    0b00000000, 0b00000000,
-    0b00000000, 0b00000000,
-    0b00000000, 0b00000000
-
-};
-
 void MouseWait(){
     uint64_t timeout = 100000;
     while (timeout--){
@@ -79,7 +58,7 @@ void HandlePS2Mouse(uint8_t data){
     switch (MouseCycle) {
         case 0:
             if(MousePacketReady) break;
-            if(data & 0b00001000 == 0) break;
+            if((data & 0b00001000) == 0) break;
             MousePacket[0] = data;
             MouseCycle++;
             break;
@@ -156,34 +135,15 @@ void ProcessMousePacket(){
     GlobalRenderer->DrawOverlayMouseCursor(MousePointer, MousePosition, 0xffffffff);
 
     if(MousePacket[0] & PS2LButton){
-        int xMax = 16;
-        int yMax = 16;
-        int differenceX = GlobalRenderer->TargetFramebuffer->Width - MousePosition.X;
-        int differenceY = GlobalRenderer->TargetFramebuffer->Height - MousePosition.Y;
 
-        if(differenceX < 16) xMax = differenceX;
-        if(differenceY < 16) yMax = differenceY;
-
-        for(int y = 0; y < yMax; y++){
-            for(int x = 0; x < xMax; x++){
-                int bit = y * 16 + x;
-                int byte = bit / 8;
-                if((DrawPointer[byte] & (0b10000000 >> (x % 8)))){
-                    GlobalRenderer->PutPix(MousePosition.X + x, MousePosition.Y + y, 0x00FF0000);
-                }
-            }
-        }
     }
 
     if(MousePacket[0] & PS2MButton){
-        GlobalRenderer->CursorPosition = {0,0};
+
     }
 
     if(MousePacket[0] & PS2RButton){
-        uint32_t color = GlobalRenderer->Color;
-        GlobalRenderer->Color = 0x0000FF00;
-        GlobalRenderer->CursorPosition = {MousePosition.X, MousePosition.Y};
-        GlobalRenderer->Color = color;
+
     }
 
     MousePacketReady = false;
