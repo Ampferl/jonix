@@ -40,6 +40,7 @@ void PageFrameAllocator::ReadEFIMemoryMap(EFI_MEMORY_DESCRIPTOR* mMap, size_t mM
             UnreservePages(desc->physicalAddress, desc->numPages);
         }
     }
+    ReservePages(0, 0x100);
     LockPages(PageBitmap.Buffer, PageBitmap.Size / 4096 + 1);
 }
 

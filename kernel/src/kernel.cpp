@@ -9,10 +9,5 @@ extern "C" void _start(BootInfo *bootInfo){
     GlobalRenderer->Println(to_hex_string((uint64_t)bootInfo->rsdp));
 
 
-
-    while (true){
-        ProcessMousePacket();
-    }
-
     while(true);
 }

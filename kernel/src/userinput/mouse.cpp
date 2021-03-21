@@ -55,6 +55,14 @@ bool MousePacketReady = false;
 Point MousePosition;
 Point MousePositionOld;
 void HandlePS2Mouse(uint8_t data){
+
+    ProcessMousePacket();
+    static bool skip = true;
+    if(skip){
+        skip = false;
+        return;
+    }
+
     switch (MouseCycle) {
         case 0:
             if(MousePacketReady) break;
