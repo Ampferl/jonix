@@ -1,9 +1,9 @@
 
 OSNAME = jonix
 
-GNUEFI = ../gnu-efi
-OVMFDIR = ../OVMFbin
-LDS = kernel.ld
+GNUEFI = ./gnu-efi
+OVMFDIR = ./OVMFbin
+LDS = kernel/kernel.ld
 CPP = g++
 ASMC = nasm
 LD = ld
@@ -12,9 +12,9 @@ CFLAGS = -ffreestanding -fshort-wchar -mno-red-zone
 ASMFLAGS =
 LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 
-SRCDIR := src
-OBJDIR := lib
-BUILDDIR = bin
+SRCDIR := kernel
+OBJDIR := build/lib
+BUILDDIR = kernel/bin
 BOOTEFI := $(GNUEFI)/x86_64/bootloader/main.efi
 
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
