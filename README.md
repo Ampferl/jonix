@@ -11,7 +11,7 @@ Build and run:
 git clone https://github.com/Ampferl/jonix.git
 cd jonix/gnu-efi
 make bootloader
-cd ../kernel
+cd ..
 make kernel
 make buildimg
 make run
