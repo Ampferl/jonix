@@ -88,6 +88,14 @@ void* malloc(size_t size){
     return malloc(size);
 }
 
+
+void free(void* address){
+    HeapSegmentHeader* segment = (HeapSegmentHeader*)address - 1;
+    segment->free = true;
+    segment->CombineForward();
+    segment->CombineBackward();
+}
+
 void ExpandHeap(size_t length){
     if(length % 0x1000){
         length -= length % 0x1000;
