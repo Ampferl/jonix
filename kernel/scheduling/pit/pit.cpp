@@ -1,5 +1,5 @@
 #include "pit.h"
-#include "../IO.h"
+#include "../../IO.h"
 
 namespace PIT{
     double TimeSinceBoot = 0;
@@ -13,8 +13,8 @@ namespace PIT{
         }
     }
 
-    void sleep(double milliseconds){
-        sleepd(milliseconds/1000);
+    void sleep(uint64_t milliseconds){
+        sleepd((double)milliseconds/1000);
     }
 
     void setDivisor(uint16_t divisor){

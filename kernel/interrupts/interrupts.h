@@ -18,6 +18,7 @@ __attribute__((interrupt)) void DoubleFault_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void GPFault_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void KeyboardInterrupt_Handler(interrupt_frame* frame);
 __attribute__((interrupt)) void MouseInterrupt_Handler(interrupt_frame* frame);
+__attribute__((interrupt)) void PITInterrupt_Handler(interrupt_frame* frame);
 
 void RemapPIC();
 void PIC_EndMaster();
