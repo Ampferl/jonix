@@ -7,7 +7,21 @@ void* heapEnd;
 HeapSegmentHeader* LastHeader;
 
 HeapSegmentHeader* HeapSegmentHeader::split(size_t splitLength){
-    return NULL;
+    if(splitLength < 0x10) return NULL;
+    int64_t splitSegmentLength = length - splitLength - (sizeof(HeapSegmentHeader));
+    if(splitSegmentLength < 0x10) return NULL;
+
+    HeapSegmentHeader* newSplitHeader = (HeapSegmentHeader*)((size_t) this + splitLength + sizeof(HeapSegmentHeader));
+    next->last = newSplitHeader;
+    newSplitHeader->next = next;
+    next = newSplitHeader;
+    newSplitHeader->last = this;
+    newSplitHeader->length = splitSegmentLength;
+    newSplitHeader->free = free;
+    length = splitLength;
+
+    if(LastHeader == this) LastHeader = newSplitHeader;
+    return newSplitHeader;
 }
 
 void InitializeHeap(void* heapAddress, size_t pageLength){
