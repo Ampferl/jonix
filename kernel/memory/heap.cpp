@@ -23,6 +23,22 @@ HeapSegmentHeader* HeapSegmentHeader::split(size_t splitLength){
     if(LastHeader == this) LastHeader = newSplitHeader;
     return newSplitHeader;
 }
+    void HeapSegmentHeader::CombineForward(){
+        if(next == NULL) return;
+        if(!next->free) return;
+
+        if(next == LastHeader) LastHeader = this;
+
+        if(next->next != NULL){
+            next->next->last = this;
+        }
+
+        length = length + next->length + sizeof(HeapSegmentHeader);
+    }
+
+    void HeapSegmentHeader::CombineBackward(){
+        if(last != NULL && last->free) last->CombineForward();
+    }
 
 void InitializeHeap(void* heapAddress, size_t pageLength){
     void* pos = heapAddress;
@@ -73,5 +89,23 @@ void* malloc(size_t size){
 }
 
 void ExpandHeap(size_t length){
+    if(length % 0x1000){
+        length -= length % 0x1000;
+        length += 0x1000;
+    }
 
+    size_t pageCount = length / 0x1000;
+    HeapSegmentHeader* newSegment = (HeapSegmentHeader*)heapEnd;
+
+    for(size_t i = 0; i < pageCount; i++){
+        GlobalPageTableManager.MapMemory(heapEnd, GlobalAllocator.RequestPage());
+        heapEnd = (void*)((size_t)heapEnd + 0x1000);
+    }
+    newSegment->free = true;
+    newSegment->last = LastHeader;
+    LastHeader->next = newSegment;
+    LastHeader = newSegment;
+    newSegment->next = NULL;
+    newSegment->length = length - sizeof(HeapSegmentHeader);
+    newSegment->CombineBackward();
 }
