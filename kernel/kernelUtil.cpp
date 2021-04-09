@@ -2,6 +2,7 @@
 #include "gdt/gdt.h"
 #include "interrupts/IDT.h"
 #include "interrupts/interrupts.h"
+#include "memory/heap.h"
 #include "IO.h"
 
 KernelInfo kernelInfo;
@@ -81,6 +82,8 @@ KernelInfo InitializeKernel(BootInfo* bootInfo){
     PrepareMemory(bootInfo);
 
     memset(bootInfo->framebuffer->BaseAddress, 0, bootInfo->framebuffer->BufferSize);
+
+    InitializeHeap((void*)0x0000100000000000, 0x10);
 
     PrepareInterrupts();
 
