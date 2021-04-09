@@ -6,6 +6,17 @@ namespace PIT{
 
     uint16_t Divisor = 65535;
 
+    void sleepd(double seconds){
+        double startTime = TimeSinceBoot;
+        while(TimeSinceBoot < startTime + seconds){
+            asm("hlt");
+        }
+    }
+
+    void sleep(double milliseconds){
+        sleepd(milliseconds/1000);
+    }
+
     void setDivisor(uint16_t divisor){
         if(divisor < 100) divisor = 100;
         Divisor = divisor;
