@@ -23,7 +23,9 @@ make run
 - [Lowlevel.eu](http://www.lowlevel.eu/wiki/Hauptseite)
 - [Little OS book](https://littleosbook.github.io/)
 - [Operating Systems From 0 to 1](https://tuhdo.github.io/os01/)
-
+- [EFI](http://developer.intel.com/technology/efia)
+- [Gnu-EFI](https://github.com/geneC/gnu-efi/tree/master/gnu-efi-3.0)
+- [OVMF](https://github.com/tianocore/tianocore.github.io/wiki/OVMF)
 ## Contact
 - Website: [jonas.ampferl.com](https://jonas.ampferl.com/)
 - Email: [contact@chaepy.net](mailto:contact@chaepy.net)
