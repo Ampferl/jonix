@@ -1,8 +1,8 @@
 
 OSNAME = jonix
 
-GNUEFI = ./gnu-efi
-OVMFDIR = ./OVMFbin
+GNUEFI = ./kernel/bin/gnu-efi
+OVMFDIR = ./kernel/bin/OVMFbin
 LDS = kernel/kernel.ld
 CPP = g++
 ASMC = nasm
