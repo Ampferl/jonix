@@ -1,4 +1,5 @@
 #include "BasicRenderer.h"
+#include "cstr.h"
 
 BasicRenderer* GlobalRenderer;
 
@@ -16,6 +17,14 @@ uint32_t BasicRenderer::GetPix(uint32_t x, uint32_t y){
 
 void BasicRenderer::PutPix(uint32_t x, uint32_t y, uint32_t color){
     *(uint32_t*)((uint64_t)TargetFramebuffer->BaseAddress + (x*4) + (y * TargetFramebuffer->PixelsPerScanline * 4)) = color;
+}
+
+void BasicRenderer::DrawRectangle(uint32_t width, uint32_t height, uint32_t x, uint32_t y, uint32_t color){
+    for(int w=x; w<=x+width; w++){
+        for(int h=y; h<=y+height; h++){
+            PutPix(w, h, color);
+        }
+    }
 }
 
 void BasicRenderer::ClearMouseCursor(uint8_t* mouseCursor, Point position){

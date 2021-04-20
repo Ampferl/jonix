@@ -24,6 +24,8 @@ class BasicRenderer{
         void PutChar(char chr, unsigned int xOff, unsigned int yOff);
         void PutChar(char chr);
         void PutPix(uint32_t x, uint32_t y, uint32_t color);
+        void DrawRectangle(uint32_t width, uint32_t height, uint32_t x, uint32_t y, uint32_t color);
+        void DrawCircle(uint32_t radius, uint32_t x, uint32_t y, uint32_t color);
         uint32_t GetPix(uint32_t x, uint32_t y);
         void DrawOverlayMouseCursor(uint8_t* mouseCursor, Point position, uint32_t color);
 };
