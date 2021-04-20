@@ -1,4 +1,5 @@
 #include "mouse.h"
+#include "../gui/window.h"
 
 uint8_t MousePointer[] = {
     0b11000000, 0b00000000,
@@ -52,6 +53,7 @@ uint8_t MouseRead(){
 uint8_t MouseCycle = 0;
 uint8_t MousePacket[4];
 bool MousePacketReady = false;
+bool WindowDrag = false;
 Point MousePosition;
 Point MousePositionOld;
 void HandlePS2Mouse(uint8_t data){
@@ -140,7 +142,17 @@ void ProcessMousePacket(){
     GlobalRenderer->DrawOverlayMouseCursor(MousePointer, MousePosition, 0xffffffff);
 
     if(MousePacket[0] & PS2LButton){
-
+        if(WindowDrag){
+            WindowDrag = false;
+            windows[0]->move(MousePosition.X, MousePosition.Y);
+        }else{
+            if(((MousePositionOld.X > windows[0]->posX+windows[0]->width-16) && (MousePositionOld.X < windows[0]->posX+windows[0]->width-1)) && ((MousePositionOld.Y > windows[0]->posY+1) && (MousePositionOld.Y < windows[0]->posY + 16))){
+                windows[0]->~Window();
+            }
+            if(((MousePositionOld.X > windows[0]->posX) && (MousePositionOld.X < windows[0]->posX + windows[0]->width)) && ((MousePositionOld.Y > windows[0]->posY) && (MousePositionOld.Y < windows[0]->posY + 20))){
+                WindowDrag = true;
+            }
+        }
     }
 
     if(MousePacket[0] & PS2MButton){

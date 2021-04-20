@@ -3,6 +3,7 @@
 #include "interrupts/IDT.h"
 #include "interrupts/interrupts.h"
 #include "memory/heap.h"
+#include "gui/window.h"
 #include "IO.h"
 
 KernelInfo kernelInfo;
