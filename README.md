@@ -1,20 +1,43 @@
-# Jonix
-Jonix is a simple kernel written in C++.
+<p align="center">
+  <img style="text-align:center" src="https://i.imgur.com/mC38RUG.png" height="127px" width="128px">
+</p>
 
-# How to build and run the kernel with qemu
+<center>
+
+![badge](https://img.shields.io/github/last-commit/Ampferl/jonix)
+![badge](https://tokei.rs/b1/github/Ampferl/jonix)
+![badge](https://badgen.net/github/stars/Ampferl/jonix)
+
+</center>
+
+# Jonix
+> Jonix is a simple kernel written in C++. 
+
+## Features
+- PS/2 Keyboard and Mouse support
+- PCI driver
+- ATA Driver
+- Malloc and free
+- Paging
+- Scheduling
+- VGA Mode
+
+## How to build and run the kernel with qemu
 Install requirements:
 ```shell
-sudo apt install build-essential qemu-system-i386 qemu-utils
+$ sudo apt install build-essential qemu-system-i386 qemu-utils
 ```
 Build and run:
 ```shell
-git clone https://github.com/Ampferl/jonix.git
-cd jonix/gnu-efi
-make bootloader
-cd ..
-make kernel
-make buildimg
-make run
+$ git clone https://github.com/Ampferl/jonix.git
+$ cd jonix/kernel/bin/gnu-efi
+
+$ make bootloader
+$ cd ../../..
+
+$ make kernel
+$ make buildimg
+$ make run
 ```
 
 ## Resources
@@ -22,6 +45,7 @@ make run
 - [OS Dev Wiki](https://wiki.osdev.org/Expanded_Main_Page)
 - [Lowlevel.eu](http://www.lowlevel.eu/wiki/Hauptseite)
 - [Little OS book](https://littleosbook.github.io/)
+- [JamesM's kernel development tutorials](http://jamesmolloy.co.uk/tutorial_html/)
 - [Operating Systems From 0 to 1](https://tuhdo.github.io/os01/)
 - [EFI](http://developer.intel.com/technology/efia)
 - [Gnu-EFI](https://github.com/geneC/gnu-efi/tree/master/gnu-efi-3.0)
