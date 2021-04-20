@@ -1,3 +1,2 @@
-kernel/bin/OVMFbin/* linguist-vendored
-kernel/bin/gnu-efi/* linguist-vendored
+kernel/bin/* linguist-vendored
 
