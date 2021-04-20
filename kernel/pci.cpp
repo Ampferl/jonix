@@ -1,4 +1,6 @@
 #include "pci.h"
+#include "ahci/ahci.h"
+#include "memory/heap.h"
 
 namespace PCI{
 
@@ -23,6 +25,20 @@ namespace PCI{
         GlobalRenderer->Print(" / ");
         GlobalRenderer->Print(GetProgIFName(pciDeviceHeader->Class, pciDeviceHeader->Subclass, pciDeviceHeader->ProgIF));
         GlobalRenderer->Next();
+
+        switch (pciDeviceHeader->Class){
+        case 0x01: // mass storage controller
+            switch (pciDeviceHeader->Subclass){
+            case 0x06: // SATA
+                switch (pciDeviceHeader->ProgIF){
+                case 0x01: // AHCI 1.0 device
+                    new AHCI::AHCIDriver(pciDeviceHeader);
+                    break;
+                }
+                break;
+            }
+            break;
+        }
     }
 
     void EnumerateDevice(uint64_t busAddress, uint64_t device){
