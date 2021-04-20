@@ -1,2 +1,2 @@
-kernel/bin/* linguist-vendored
+kernel/bin/*.c linguist-vendored
 
