@@ -20,6 +20,7 @@
 - Malloc and free
 - Paging
 - Scheduling
+- Simple GUI
 - VGA Mode
 
 ## How to build and run the kernel with qemu
@@ -48,6 +49,7 @@ $ make run
 - [JamesM's kernel development tutorials](http://jamesmolloy.co.uk/tutorial_html/)
 - [Operating Systems From 0 to 1](https://tuhdo.github.io/os01/)
 - [EFI](http://developer.intel.com/technology/efia)
+- [SATA Specification](https://www.intel.com.au/content/dam/www/public/us/en/documents/technical-specifications/serial-ata-ahci-spec-rev1-3-1.pdf#zoom=100)
 - [Gnu-EFI](https://github.com/geneC/gnu-efi/tree/master/gnu-efi-3.0)
 - [OVMF](https://github.com/tianocore/tianocore.github.io/wiki/OVMF)
 ## Contact
