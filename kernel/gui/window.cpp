@@ -1,5 +1,6 @@
 #include "window.h"
 #include "../BasicRenderer.h"
+#include "../userinput/mouse.h"
 #include "icon.h"
 
 GUI::Window* windows[];
@@ -22,16 +23,18 @@ namespace GUI{
     }
 
     void Window::saveBackground(){
-        for(uint32_t x = 0; x <= this->width; x++){
-            for(uint32_t y = 0; y <= this->height; y++){
+        GlobalRenderer->ClearMouseCursor(GUI::ICON::MousePointer, MousePosition);
+        for(uint32_t x = 0; x <= this->width; ++x){
+            for(uint32_t y = 0; y <= this->height; ++y){
                 windowBuffer[(this->width*y)+x] = GlobalRenderer->GetPix(x+this->posX, y+this->posY);
             }
         }
+        GlobalRenderer->DrawOverlayMouseCursor(GUI::ICON::MousePointer, MousePosition, 0xffffffff);
     }
 
     void Window::loadBackground(){
-        for(uint32_t x = 0; x <= this->width; x++){
-            for(uint32_t y = 0; y <= this->height; y++){
+        for(uint32_t x = 0; x <= this->width; ++x){
+            for(uint32_t y = 0; y <= this->height; ++y){
                 GlobalRenderer->PutPix(x+this->posX, y+this->posY, windowBuffer[(this->width*y)+x]);
             }
         }
@@ -46,8 +49,8 @@ namespace GUI{
     }
 
     void Window::loadMenuButtons(){
-        for(uint16_t c = 0; c <= 14; c++){
-            for(uint16_t r = 0; r <= 14; r++){
+        for(uint16_t c = 0; c <= 14; ++c){
+            for(uint16_t r = 0; r <= 14; ++r){
                 uint32_t pixColor;
                 if(GUI::ICON::closeButton[(15*r)+c] == 1){
                     pixColor = 0x00FF0000;
@@ -57,8 +60,8 @@ namespace GUI{
                 GlobalRenderer->PutPix((this->posX+this->width-16)+c, (this->posY+1)+r, pixColor);
             }
         }
-        for(uint16_t c = 0; c <= 14; c++){
-            for(uint16_t r = 0; r <= 14; r++){
+        for(uint16_t c = 0; c <= 14; ++c){
+            for(uint16_t r = 0; r <= 14; ++r){
                 uint32_t pixColor;
                 if(GUI::ICON::hideButton[(15*r)+c] == 1){
                     pixColor = 0x00FF7E00;
