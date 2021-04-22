@@ -62,3 +62,6 @@ $ make run
 - Author: [Jonas Ampferl](https://github.com/Ampferl)
 - Website: [jonas.ampferl.com](https://jonas.ampferl.com/)
 - Email: [contact@chaepy.net](mailto:contact@chaepy.net)
+
+## License
+Jonix is licensed under a [MIT](LICENSE) license.
