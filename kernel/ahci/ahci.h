@@ -3,6 +3,14 @@
 #include "../pci.h"
 
 namespace AHCI {
+    enum PortType{
+        None = 0,
+        SATA = 1,
+        SEMB = 2,
+        PM = 3,
+        SATAPI = 4,
+    };
+
     struct HBAPort{
         uint32_t commandListBase;
         uint32_t commandListBaseUpper;
@@ -48,5 +56,7 @@ namespace AHCI {
             AHCIDriver(PCI::PCIDeviceHeader* pciBaseAddress);
             ~AHCIDriver();
             PCI::PCIDeviceHeader* pciBaseAddress;
+            HBAMemory* ABAR;
+            void ProbePorts();
     };
 }
