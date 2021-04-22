@@ -14,6 +14,7 @@ namespace GUI{
             uint32_t color = 0x00000000;
             void saveBackground();
             void loadBackground();
+            void loadMenuButtons();
             void drawWindow();
             void move(uint32_t x, uint32_t y);
             void create();
