@@ -131,7 +131,7 @@ InitializeUnicodeSupport (
     // Check all driver's for a matching language code
     //
 
-    for (Index=0; Index < NoHandles; Index++) {
+    for (Index=0; Index < NoHandles; ++Index) {
         Status = uefi_call_wrapper(BS->HandleProtocol, 3, Handles[Index], &UnicodeCollationProtocol, (VOID*)&Ui);
         if (EFI_ERROR(Status)) {
             continue;

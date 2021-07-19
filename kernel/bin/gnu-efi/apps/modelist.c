@@ -17,7 +17,7 @@ print_modes(EFI_GRAPHICS_OUTPUT_PROTOCOL *gop)
 		imax = 1;
 	}
 
-	for (i = 0; i < imax; i++) {
+	for (i = 0; i < imax; ++i) {
 		EFI_GRAPHICS_OUTPUT_MODE_INFORMATION *info;
 		UINTN SizeOfInfo;
 		rc = uefi_call_wrapper(gop->QueryMode, 4, gop, i, &SizeOfInfo,

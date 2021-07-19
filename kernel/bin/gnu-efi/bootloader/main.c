@@ -104,7 +104,7 @@ Framebuffer* InitializeGOP(){
 
 int memcmp(const void *aptr, const void *bptr, size_t n){
 	const unsigned char *a = aptr, *b = bptr;
-	for(size_t i = 0; i < n; i++){
+	for(size_t i = 0; i < n; ++i){
 		if(a[i] < b[i]) return -1;
 		else if(a[i] > b[i]) return 1;
 	}
@@ -112,7 +112,7 @@ int memcmp(const void *aptr, const void *bptr, size_t n){
 }
 
 UINTN strcmp(CHAR8* a, CHAR8* b, UINTN length){
-    for(UINTN i = 0; i < length; i++){
+    for(UINTN i = 0; i < length; ++i){
         if(*a != *b) return 0;
     }
     return 1;
@@ -234,7 +234,7 @@ EFI_STATUS efi_main (EFI_HANDLE ImageHandle, EFI_SYSTEM_TABLE *SystemTable) {
     void* rsdp = NULL;
     EFI_GUID Acpi2TableGuid = ACPI_20_TABLE_GUID;
 
-    for(UINTN index = 0; index < SystemTable->NumberOfTableEntries; index++){
+    for(UINTN index = 0; index < SystemTable->NumberOfTableEntries; ++index){
         if(CompareGuid(&configTable[index].VendorGuid, &Acpi2TableGuid)){
             if(strcmp((CHAR8*)"RSD PTR ", (CHAR8*)configTable->VendorTable, 8)){
                 rsdp = (void*)configTable->VendorTable;

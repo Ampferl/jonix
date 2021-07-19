@@ -68,7 +68,7 @@ DebugHook(void)
 	Print(L"To disable this, remove the EFI variable DUMMY_DEBUG-%g .\n",
 	      &guid);
 	x = 1;
-	while (x++) {
+	while (++x) {
 		/* Make this so it can't /totally/ DoS us. */
 #if defined(__x86_64__) || defined(__i386__) || defined(__i686__)
 		if (x > 4294967294ULL)

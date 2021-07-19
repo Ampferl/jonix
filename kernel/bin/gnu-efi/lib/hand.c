@@ -40,7 +40,7 @@ LibLocateProtocol (
         return Status;
     }
 
-    for (Index=0; Index < NumberHandles; Index++) {
+    for (Index=0; Index < NumberHandles; ++Index) {
         Status = uefi_call_wrapper(BS->HandleProtocol, 3, Handles[Index], ProtocolGuid, Interface);
         if (!EFI_ERROR(Status)) {
             break;
@@ -175,7 +175,7 @@ LibLocateHandleByDiskSignature (
 
     *NoHandles = 0;
 
-    for(Index=0;Index<NoBlockIoHandles;Index++) {
+    for(Index=0;Index<NoBlockIoHandles;++Index) {
 
         Status = uefi_call_wrapper(
 				     BS->HandleProtocol, 
@@ -283,7 +283,7 @@ LibLocateHandleByDiskSignature (
     //
 
     *NoHandles = 0;
-    for(Index=0;Index<NoBlockIoHandles;Index++) {
+    for(Index=0;Index<NoBlockIoHandles;++Index) {
         if (BlockIoBuffer[Index] != NULL) {
             (*Buffer)[*NoHandles] = BlockIoBuffer[Index];
             *NoHandles = *NoHandles + 1;

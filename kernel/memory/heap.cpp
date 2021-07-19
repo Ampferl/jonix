@@ -45,7 +45,7 @@ HeapSegmentHeader* HeapSegmentHeader::split(size_t splitLength){
 void InitializeHeap(void* heapAddress, size_t pageLength){
     void* pos = heapAddress;
 
-    for(size_t i = 0; i < pageLength; i++){
+    for(size_t i = 0; i < pageLength; ++i){
         GlobalPageTableManager.MapMemory(pos, GlobalAllocator.RequestPage());
         pos = (void*)((size_t)pos + 0x1000);
     }
@@ -107,7 +107,7 @@ void ExpandHeap(size_t length){
     size_t pageCount = length / 0x1000;
     HeapSegmentHeader* newSegment = (HeapSegmentHeader*)heapEnd;
 
-    for(size_t i = 0; i < pageCount; i++){
+    for(size_t i = 0; i < pageCount; ++i){
         GlobalPageTableManager.MapMemory(heapEnd, GlobalAllocator.RequestPage());
         heapEnd = (void*)((size_t)heapEnd + 0x1000);
     }

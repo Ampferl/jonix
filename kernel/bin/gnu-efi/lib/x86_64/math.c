@@ -156,7 +156,7 @@ DivU64x32 (
     //
 
     Rem = 0;
-    for (bit=0; bit < 64; bit++) {
+    for (bit=0; bit < 64; ++bit) {
         _asm {
             shl     dword ptr Dividend[0], 1    ; shift rem:dividend left one
             rcl     dword ptr Dividend[4], 1    

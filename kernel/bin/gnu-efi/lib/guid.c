@@ -152,7 +152,7 @@ GuidToString (
     // Else, (for now) use additional internal function for mapping guids
     //
 
-    for (Index=0; KnownGuids[Index].Guid; Index++) {
+    for (Index=0; KnownGuids[Index].Guid; ++Index) {
         if (CompareGuid(Guid, KnownGuids[Index].Guid) == 0) {
             SPrint (Buffer, 0, KnownGuids[Index].GuidName);
             return ;

@@ -52,7 +52,7 @@ RtStrCpy (
 // copy strings
 {
     while (*Src) {
-        *(Dest++) = *(Src++);
+        *(++Dest) = *(++Src);
     }
     *Dest = 0;
 }
@@ -87,7 +87,7 @@ RtStpCpy (
 // copy strings
 {
     while (*Src) {
-        *(Dest++) = *(Src++);
+        *(++Dest) = *(++Src);
     }
     *Dest = 0;
     return Dest;
@@ -172,7 +172,7 @@ RtStrnLen (
 // string length
 {
     UINTN i;
-    for (i = 0; *s1 && i < Len; i++)
+    for (i = 0; *s1 && i < Len; ++i)
         s1++;
     return i;
 }

@@ -135,7 +135,7 @@ Returns:
         return FALSE;
     }
 
-    for (Table = UnicodeToPcAnsiOrAscii; Table->Unicode != 0x0000; Table++) {
+    for (Table = UnicodeToPcAnsiOrAscii; Table->Unicode != 0x0000; ++Table) {
         if (Graphic == Table->Unicode) {
             if (PcAnsi) {
                 *PcAnsi = Table->PcAnsi; 

@@ -65,7 +65,7 @@ DevicePathInstance (
     // Check for end of device path type
     //
 
-    for (Count = 0; ; Count++) {
+    for (Count = 0; ; ++Count) {
         Next = NextDevicePathNode(DevPath);
 
         if (IsDevicePathEndType(DevPath)) {
@@ -712,7 +712,7 @@ _DevPathMacAddr (
 
     CatPrint(Str, L"Mac(");
 
-    for(Index = 0; Index < HwAddressSize; Index++) {
+    for(Index = 0; Index < HwAddressSize; ++Index) {
         CatPrint(Str, L"%02x",MAC->MacAddress.Addr[Index]);
     }
     if ( MAC-> IfType != 0 ) {

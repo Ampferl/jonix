@@ -36,7 +36,7 @@ namespace AHCI{
 
     void AHCIDriver::ProbePorts(){
         uint32_t portsImplemented = ABAR->portsImplemented;
-        for(int i = 0; i<32;i++){
+        for(int i = 0; i<32;++i){
             if(portsImplemented & (1 << i)){
                 PortType portType = CheckPortType(&ABAR->ports[i]);
 

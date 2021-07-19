@@ -58,7 +58,7 @@ const char* internal_to_hex_string(uint64_t value, uint8_t size){
     uint64_t* valPtr = &value;
     uint8_t* ptr;
     uint8_t tmp;
-    for(uint8_t i = 0; i < size; i++){
+    for(uint8_t i = 0; i < size; ++i){
         ptr = ((uint8_t*) valPtr + i);
         tmp = ((*ptr & 0xF0) >> 4);
         hexTo_StringOutput[size - (i * 2 + 1)] = tmp + (tmp > 9 ? 55 : '0');
@@ -112,7 +112,7 @@ const char* to_string(double value, uint8_t decimalPlaces){
     doublePtr++;
 
     double newValue = value - (int)value;
-    for(uint8_t i = 0; i < decimalPlaces; i++){
+    for(uint8_t i = 0; i < decimalPlaces; ++i){
         newValue *= 10;
         *doublePtr = (int)newValue + '0';
         newValue -= (int)newValue;

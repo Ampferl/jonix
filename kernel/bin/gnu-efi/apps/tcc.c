@@ -21,12 +21,12 @@ void dump_stack_helper(uint64_t rsp_val)
 	Print(L"%%rsp: 0x%08x%08x stack:\r\n",
 					(rsp_val & 0xffffffff00000000) >>32,
 					 rsp_val & 0xffffffff);
-	for (x = 0; x < 8; x++) {
+	for (x = 0; x < 8; ++x) {
 		Print(L"%08x: ", ((uint64_t)rsp) & 0xffffffff);
-		Print(L"%016x ", *rsp++);
-		Print(L"%016x ", *rsp++);
-		Print(L"%016x ", *rsp++);
-		Print(L"%016x\r\n", *rsp++);
+		Print(L"%016x ", ++*rsp);
+		Print(L"%016x ", ++*rsp);
+		Print(L"%016x ", ++*rsp);
+		Print(L"%016x\r\n", ++*rsp);
 	}
 }
 #endif

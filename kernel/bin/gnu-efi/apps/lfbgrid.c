@@ -32,9 +32,9 @@ fill_boxes(UINT32 *PixelBuffer, UINT32 Width, UINT32 Height, UINT32 Pitch,
 		return;
 	}
 
-	for (y = 0; y < Height; y++) {
+	for (y = 0; y < Height; ++y) {
 		color = ((y / 32) % 2 == 0) ? Red : Green;
-		for (x = 0; x < Width; x++) {
+		for (x = 0; x < Width; ++x) {
 			if (x % 32 == 0 && x != 0)
 				color = (color == Red) ? Green : Red;
 			PixelBuffer[y * Pitch + x] = color;
@@ -66,7 +66,7 @@ draw_boxes(EFI_GRAPHICS_OUTPUT_PROTOCOL *gop)
 		return;
 	}
 
-	for (i = 0; i < imax; i++) {
+	for (i = 0; i < imax; ++i) {
 		UINTN SizeOfInfo;
 		rc = uefi_call_wrapper(gop->QueryMode, 4, gop, i, &SizeOfInfo,
 					&info);

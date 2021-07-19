@@ -280,7 +280,7 @@ xtoi (
 
     // convert hex digits
     u = 0;
-    while ((c = *(str++))) {
+    while ((c = *(++str))) {
         if (c >= 'a'  &&  c <= 'f') {
             c -= 'a' - 'A';
         }
@@ -311,7 +311,7 @@ Atoi (
 
     // convert digits
     u = 0;
-    while ((c = *(str++))) {
+    while ((c = *(++str))) {
         if (c >= '0' && c <= '9') {
             u = (u * 10) + c - '0';
         } else {
@@ -365,7 +365,7 @@ MetaMatch (
             }
 
             l = 0;
-            while ((p = *Pattern++)) {
+            while ((p = *++Pattern)) {
                 if (p == ']') {
                     return FALSE;
                 }

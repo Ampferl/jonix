@@ -234,7 +234,7 @@ LibSearchSalSystemTable (
     //
 
     SalTableHack = (UINT8 *)&SalSystemTable->Entry0;
-    for (Count = 0; Count < EntryCount ;Count++) {
+    for (Count = 0; Count < EntryCount ;++Count) {
         if (*SalTableHack == EntryType) {
             return (VOID *)SalTableHack;
         }

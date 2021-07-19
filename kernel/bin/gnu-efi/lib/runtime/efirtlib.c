@@ -34,7 +34,7 @@ RtZeroMem (
 
     pt = Buffer;
     while (Size--) {
-        *(pt++) = 0;
+        *(++pt) = 0;
     }
 }
 
@@ -53,7 +53,7 @@ RtSetMem (
 
     pt = Buffer;
     while (Size--) {
-        *(pt++) = Value;
+        *(++pt) = Value;
     }
 }
 
@@ -72,7 +72,7 @@ RtCopyMem (
     CONST CHAR8 *s = Src;
     d = Dest;
     while (len--) {
-        *(d++) = *(s++);
+        *(++d) = *(++s);
     }
 }
 

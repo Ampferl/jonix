@@ -387,7 +387,7 @@ LibInsertToTailOfBootOrder (
     VarSize += sizeof(UINT16);
     NewBootOptionArray = AllocatePool (VarSize);
     
-    for (Index = 0; Index < ((VarSize/sizeof(UINT16)) - 1); Index++) {
+    for (Index = 0; Index < ((VarSize/sizeof(UINT16)) - 1); ++Index) {
         NewBootOptionArray[Index] = BootOptionArray[Index];
     }
     //
@@ -432,7 +432,7 @@ ValidMBR(
     } 
 
     ValidMbr = FALSE;
-    for (i=0; i<MAX_MBR_PARTITIONS; i++) {
+    for (i=0; i<MAX_MBR_PARTITIONS; ++i) {
         if ( Mbr->Partition[i].OSIndicator == 0x00 || EXTRACT_UINT32(Mbr->Partition[i].SizeInLBA) == 0 ) {
             continue;
         }
@@ -461,7 +461,7 @@ ValidMBR(
             }
 
         }
-        for (j=i+1; j<MAX_MBR_PARTITIONS; j++) {
+        for (j=i+1; j<MAX_MBR_PARTITIONS; ++j) {
             if (Mbr->Partition[j].OSIndicator == 0x00 || EXTRACT_UINT32(Mbr->Partition[j].SizeInLBA) == 0) {
                 continue;
             }
@@ -514,7 +514,7 @@ LibGetSystemConfigurationTable(
 {
     UINTN Index;
 
-    for(Index=0;Index<ST->NumberOfTableEntries;Index++) {
+    for(Index=0;Index<ST->NumberOfTableEntries;++Index) {
         if (CompareGuid(TableGuid,&(ST->ConfigurationTable[Index].VendorGuid))==0) {
             *Table = ST->ConfigurationTable[Index].VendorTable;
             return EFI_SUCCESS;
@@ -545,7 +545,7 @@ LibGetUiString (
     //
     // Skip the first strings
     //
-    for (Index = UiDeviceString, Array = Ui->Entry; Index < StringType; Index++, Array++) {
+    for (Index = UiDeviceString, Array = Ui->Entry; Index < StringType; ++Index, ++Array) {
         while (Array->LangCode) {
             Array++;
         }

@@ -20,8 +20,8 @@ void BasicRenderer::PutPix(uint32_t x, uint32_t y, uint32_t color){
 }
 
 void BasicRenderer::DrawRectangle(uint32_t width, uint32_t height, uint32_t x, uint32_t y, uint32_t color){
-    for(int w=x; w<=x+width; w++){
-        for(int h=y; h<=y+height; h++){
+    for(int w=x; w<=x+width; ++w){
+        for(int h=y; h<=y+height; ++h){
             PutPix(w, h, color);
         }
     }
@@ -38,8 +38,8 @@ void BasicRenderer::ClearMouseCursor(uint8_t* mouseCursor, Point position){
     if(differenceX < 16) xMax = differenceX;
     if(differenceY < 16) yMax = differenceY;
 
-    for(int y = 0; y < yMax; y++){
-        for(int x = 0; x < xMax; x++){
+    for(int y = 0; y < yMax; ++y){
+        for(int x = 0; x < xMax; ++x){
             int bit = y * 16 + x;
             int byte = bit / 8;
             if((mouseCursor[byte] & (0b10000000 >> (x % 8)))){
@@ -60,8 +60,8 @@ void BasicRenderer::DrawOverlayMouseCursor(uint8_t* mouseCursor, Point position,
     if(differenceX < 16) xMax = differenceX;
     if(differenceY < 16) yMax = differenceY;
 
-    for(int y = 0; y < yMax; y++){
-        for(int x = 0; x < xMax; x++){
+    for(int y = 0; y < yMax; ++y){
+        for(int x = 0; x < xMax; ++x){
             int bit = y * 16 + x;
             int byte = bit / 8;
             if((mouseCursor[byte] & (0b10000000 >> (x % 8)))){
@@ -101,9 +101,9 @@ void BasicRenderer::Clear(){
     uint64_t fbBase = (uint64_t)TargetFramebuffer->BaseAddress;
     uint64_t bytesPerScanline = TargetFramebuffer->PixelsPerScanline * 4;
     uint64_t fbHeight = TargetFramebuffer->Height;
-    for(int verticalScanline = 0; verticalScanline < fbHeight; verticalScanline++){
+    for(int verticalScanline = 0; verticalScanline < fbHeight; ++verticalScanline){
         uint64_t pixPtrBase = fbBase + (bytesPerScanline * verticalScanline);
-        for(uint32_t* pixPtr = (uint32_t*)pixPtrBase; pixPtr < (uint32_t*)(pixPtrBase + bytesPerScanline); pixPtr++){
+        for(uint32_t* pixPtr = (uint32_t*)pixPtrBase; pixPtr < (uint32_t*)(pixPtrBase + bytesPerScanline); ++pixPtr){
             *pixPtr = ClearColor;
         }
     }
@@ -120,8 +120,8 @@ void BasicRenderer::ClearChar(){
     unsigned int yOff = CursorPosition.Y;
 
     unsigned int* pixPtr = (unsigned int*)TargetFramebuffer->BaseAddress;
-    for(unsigned long y = yOff; y < yOff + 16; y++){
-        for(unsigned long x = xOff - 8; x < xOff; x++){
+    for(unsigned long y = yOff; y < yOff + 16; ++y){
+        for(unsigned long x = xOff - 8; x < xOff; ++x){
             *(unsigned int*)(pixPtr + x + (y * TargetFramebuffer->PixelsPerScanline)) = ClearColor;
 
         }
@@ -138,8 +138,8 @@ void BasicRenderer::ClearChar(){
 void BasicRenderer::PutChar(char chr, unsigned int xOff, unsigned int yOff){
     unsigned int* pixPtr = (unsigned int*)TargetFramebuffer->BaseAddress;
     char* fontPtr = (char*)PSF1_Font->glyphBuffer + (chr * PSF1_Font->psf1_Header->charsize);
-    for(unsigned long y = yOff; y < yOff + 16; y++){
-        for(unsigned long x = xOff; x < xOff+8; x++){
+    for(unsigned long y = yOff; y < yOff + 16; ++y){
+        for(unsigned long x = xOff; x < xOff+8; ++x){
             if((*fontPtr & (0b10000000 >> (x - xOff))) > 0){
                 *(unsigned int*)(pixPtr + x + (y * TargetFramebuffer->PixelsPerScanline)) = Color;
             }

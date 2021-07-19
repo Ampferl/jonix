@@ -69,7 +69,7 @@ static EFI_STATUS find_pci_device(uint16_t vendor_id, uint16_t device_id,
 	if (EFI_ERROR(rc))
 		return rc;
 
-	for (i = 0; i < NoHandles; i++) {
+	for (i = 0; i < NoHandles; ++i) {
 		void *pciio_tmp = NULL;
 		rc = uefi_call_wrapper(BS->OpenProtocol, 6, Handles[i],
 				    &PciIoProtocol, &pciio_tmp, ImageHandle,
@@ -105,7 +105,7 @@ efi_main (EFI_HANDLE image_handle, EFI_SYSTEM_TABLE *systab)
 	int i;
 
 	ImageHandle = image_handle;
-	for (i = 0; devices[i].vendor != 0; i++) {
+	for (i = 0; devices[i].vendor != 0; ++i) {
 		rc = find_pci_device(devices[i].vendor, devices[i].device, &pciio);
 		if (EFI_ERROR(rc))
 			continue;

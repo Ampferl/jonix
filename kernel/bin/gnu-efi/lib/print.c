@@ -952,7 +952,7 @@ PITEM (
     }
 
     // pad item
-    for (i=Len; i < Item->Width; i++) {
+    for (i=Len; i < Item->Width; ++i) {
         PPUTC (ps, Item->Pad);
     }
 
@@ -1277,12 +1277,12 @@ ValueToHex (
 
     while (v) {
         // Without the cast, the MSVC compiler may insert a reference to __allmull
-        *(p1++) = Hex[(UINTN)(v & 0xf)];
+        *(++p1) = Hex[(UINTN)(v & 0xf)];
         v = RShiftU64 (v, 4);
     }
 
     while (p1 != str) {
-        *(p2++) = *(--p1);
+        *(++p2) = *(--p1);
     }
     *p2 = 0;
 }
@@ -1310,13 +1310,13 @@ ValueToString (
     p2 = Buffer;
 
     if (v < 0) {
-        *(p2++) = '-';
+        *(++p2) = '-';
         v = -v;
     }
 
     while (v) {
         v = (INT64)DivU64x32 ((UINT64)v, 10, &r);
-        *(p1++) = (CHAR8)r + '0';
+        *(++p1) = (CHAR8)r + '0';
     }
 
     c = (Comma ? ca[(p1 - str) % 3] : 999) + 1;
@@ -1324,11 +1324,11 @@ ValueToString (
 
         c -= 1;
         if (!c) {
-            *(p2++) = ',';
+            *(++p2) = ',';
             c = 3;
         }
 
-        *(p2++) = *(--p1);
+        *(++p2) = *(--p1);
     }
     *p2 = 0;
 }
