@@ -1,5 +1,6 @@
 #include "BasicRenderer.h"
 #include "cstr.h"
+#include "cmath.h"
 
 BasicRenderer* GlobalRenderer;
 
@@ -25,6 +26,12 @@ void BasicRenderer::DrawRectangle(uint32_t width, uint32_t height, uint32_t x, u
             PutPix(w, h, color);
         }
     }
+}
+void BasicRenderer::DrawLine(uint32_t x1, uint32_t y1, uint32_t x2, uint32_t y2, uint32_t color)
+{
+    double m = (x2 - x1) / (y2 - y1);
+    for(int x = x1; x <= x2; ++x)
+        PutPix(x, y1 + (uint32_t)round(m * (double) x), color);
 }
 
 void BasicRenderer::ClearMouseCursor(uint8_t* mouseCursor, Point position){
