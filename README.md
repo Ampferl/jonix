@@ -23,23 +23,8 @@
 - Simple GUI
 - VGA Mode
 
-## How to build and run the kernel with qemu
-Install requirements:
-```shell
-$ sudo apt install build-essential qemu-system-i386 qemu-utils
-```
-Build and run:
-```shell
-$ git clone https://github.com/Ampferl/jonix.git
-$ cd jonix/kernel/bin/gnu-efi
-
-$ make bootloader
-$ cd ../../..
-
-$ make kernel
-$ make buildimg
-$ make run
-```
+## How to build and run jonix?
+See the [Jonix build instructions](documentation/BuildInstructions.md)
 
 ## Screenshot
 

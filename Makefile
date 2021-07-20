@@ -1,12 +1,12 @@
 
 OSNAME = jonix
 
-GNUEFI = ./kernel/bin/gnu-efi
-OVMFDIR = ./kernel/bin/OVMFbin
+GNUEFI = kernel/bin/gnu-efi
+OVMFDIR = kernel/bin/OVMFbin
 LDS = kernel/kernel.ld
-CPP = g++
+CPP = toolchain/local/x86_64/bin/x86_64-jonix-elf-g++
 ASMC = nasm
-LD = ld
+LD = toolchain/local/x86_64/bin/x86_64-jonix-elf-ld
 
 CFLAGS = -ffreestanding -fshort-wchar -mno-red-zone -fno-exceptions
 ASMFLAGS =
@@ -53,7 +53,7 @@ setup:
 
 buildimg:
 	dd if=/dev/zero of=$(BUILDDIR)/$(OSNAME).img bs=512 count=93750
-	mformat -i $(BUILDDIR)/$(OSNAME).img -f 1440 ::
+	mformat -i $(BUILDDIR)/$(OSNAME).img -f 2880 ::
 	mmd -i $(BUILDDIR)/$(OSNAME).img ::/EFI
 	mmd -i $(BUILDDIR)/$(OSNAME).img ::/EFI/BOOT
 	mcopy -i $(BUILDDIR)/$(OSNAME).img $(BOOTEFI) ::/EFI/BOOT
