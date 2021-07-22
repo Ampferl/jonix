@@ -4,7 +4,7 @@ OSNAME = jonix
 GNUEFI = kernel/bin/gnu-efi
 OVMFDIR = kernel/bin/OVMFbin
 LDS = kernel/kernel.ld
-CPP = toolchain/local/x86_64/bin/x86_64-jonix-elf-g++
+CC = toolchain/local/x86_64/bin/x86_64-jonix-elf-g++
 ASMC = nasm
 LD = toolchain/local/x86_64/bin/x86_64-jonix-elf-ld
 
@@ -30,12 +30,12 @@ kernel: $(OBJS) link
 $(OBJDIR)/interrupts/interrupts.o: $(SRCDIR)/interrupts/interrupts.cpp
 	@ echo !==== COMPILING $^
 	@ mkdir -p $(@D)
-	$(CPP) -mno-red-zone -mgeneral-regs-only -ffreestanding -c $^ -o $@
+	$(CC) -mno-red-zone -mgeneral-regs-only -ffreestanding -c $^ -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@ echo !==== COMPILING $^
 	@ mkdir -p $(@D)
-	$(CPP) $(CFLAGS) -c $^ -o $@
+	$(CC) $(CFLAGS) -c $^ -o $@
 
 $(OBJDIR)/%_asm.o: $(SRCDIR)/%.asm
 	@ echo !==== COMPILING $^
