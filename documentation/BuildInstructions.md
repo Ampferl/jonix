@@ -11,10 +11,11 @@ git clone https://github.com/Ampferl/jonix.git
 cd jonix
 ```
 
-## Build toolchain
+## Build Operating System
 ```shell
 make setup
 ``` 
+With the command `make setup`, jonix will automatically build the toolchain, kernel and libraries and put them together into one running system.
 ## Run the kernel
 ```
 make run

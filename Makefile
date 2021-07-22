@@ -8,14 +8,15 @@ CC = toolchain/local/x86_64/bin/x86_64-jonix-elf-g++
 ASMC = nasm
 LD = toolchain/local/x86_64/bin/x86_64-jonix-elf-ld
 
-CFLAGS = -ffreestanding -fshort-wchar -mno-red-zone -fno-exceptions
-ASMFLAGS =
-LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
-
+SYSROOT := sysroot
 SRCDIR := kernel
 OBJDIR := build/lib
 BUILDDIR = kernel/bin
 BOOTEFI := $(GNUEFI)/x86_64/bootloader/main.efi
+
+CFLAGS = --sysroot=$(SYSROOT) -ffreestanding -fshort-wchar -mno-red-zone -fno-exceptions
+ASMFLAGS =
+LDFLAGS = -T $(LDS) -static -Bsymbolic -nostdlib
 
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
@@ -26,11 +27,12 @@ OBJS += $(patsubst $(SRCDIR)/%.asm, $(OBJDIR)/%_asm.o, $(ASMSRC))
 DIRS = $(wildcard $(SRCDIR)/*)
 
 kernel: $(OBJS) link
+	@ cp -R --preserve=timestamps $(SRCDIR)/include/. $(SYSROOT)/usr/include
 
 $(OBJDIR)/interrupts/interrupts.o: $(SRCDIR)/interrupts/interrupts.cpp
 	@ echo !==== COMPILING $^
 	@ mkdir -p $(@D)
-	$(CC) -mno-red-zone -mgeneral-regs-only -ffreestanding -c $^ -o $@
+	$(CC) --sysroot=$(SYSROOT) -mno-red-zone -mgeneral-regs-only -ffreestanding -c $^ -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@ echo !==== COMPILING $^
@@ -48,10 +50,10 @@ link:
 
 setup:
 	@ cd toolchain && ./build.sh
+	@ cd libraries && make build
 	@ cd kernel/bin/gnu-efi && make bootloader
 	@ make kernel
 	@ make buildimg
-	@ cd libraries && make build
 
 buildimg:
 	dd if=/dev/zero of=$(BUILDDIR)/$(OSNAME).img bs=512 count=93750
@@ -65,3 +67,9 @@ buildimg:
 
 run:
 	qemu-system-x86_64 -machine q35 -drive file=$(BUILDDIR)/$(OSNAME).img -drive file=$(BUILDDIR)/blank.img -m 256M -cpu qemu64 -drive if=pflash,format=raw,unit=0,file="$(OVMFDIR)/OVMF_CODE-pure-efi.fd",readonly=on -drive if=pflash,format=raw,unit=1,file="$(OVMFDIR)/OVMF_VARS-pure-efi.fd" -net none
+
+clean:
+	@ rm sysroot -rf
+	@ rm libraries/build -rf
+	@ rm build -rf
+	@ rm libraries/build -rf

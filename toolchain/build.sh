@@ -47,7 +47,7 @@ rm binutils-$BINUTILS_VERSION.tar.xz
 
 mkdir build-binutils
 cd build-binutils
-../binutils-$BINUTILS_VERSION/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
+../binutils-$BINUTILS_VERSION/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot=../sysroot --disable-nls --disable-werror
 make
 make install
 
@@ -55,7 +55,7 @@ cd $DIR/build
  
 mkdir build-gcc
 cd build-gcc
-../gcc-$GCC_VERSION/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
+../gcc-$GCC_VERSION/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers --with-sysroot=../sysroot
 make all-gcc
 make all-target-libgcc
 make install-gcc
