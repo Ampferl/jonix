@@ -13,20 +13,9 @@ cd jonix
 
 ## Build toolchain
 ```shell
-cd toolchain
-./build.sh
+make setup
 ``` 
-
-## Build bootloader
-```shell
-cd jonix/kernel/bin/gnu-efi
-make bootloader
-cd ../../..
+## Run the kernel
 ```
-
-## Build and run the kernel
-```
-make kernel
-make buildimg
 make run
 ```

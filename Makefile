@@ -47,9 +47,11 @@ link:
 	$(LD) $(LDFLAGS) -o $(BUILDDIR)/kernel.elf $(OBJS)
 
 setup:
-	@mkdir $(BUILDDIR)
-	@mkdir $(SRCDIR)
-	@mkdir $(OBJDIR)
+	@ cd toolchain && ./build.sh
+	@ cd kernel/bin/gnu-efi && make bootloader
+	@ make kernel
+	@ make buildimg
+	@ cd libraries && make build
 
 buildimg:
 	dd if=/dev/zero of=$(BUILDDIR)/$(OSNAME).img bs=512 count=93750
