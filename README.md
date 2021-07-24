@@ -22,6 +22,8 @@
 - Scheduling
 - Simple GUI
 - VGA Mode
+- Own LibC implementation
+- Custom toolchain 
 
 ## How to build and run jonix?
 See the [Jonix build instructions](documentation/BuildInstructions.md)

@@ -1,4 +1,8 @@
-libraries := libc
+libraries = libC \
+			libGUI
 
 build: $(libraries)
-	@ cd $(libraries) && make
+	@for entry in ${libraries};             \
+    do                                      \
+		cd $${entry} && make;cd ..;			\
+    done
