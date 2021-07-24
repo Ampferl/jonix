@@ -17,7 +17,10 @@ run:
 	@ cd kernel && make run
 
 clean:
-	@ rm sysroot -rf
+	@ rm toolchain/build -rf
 	@ rm libraries/build -rf
 	@ rm build -rf
-	@ rm libraries/build -rf
+
+clear: clean
+	@ rm sysroot -rf
+	@ rm toolchain/local -rf
